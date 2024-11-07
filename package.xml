@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>pointcloud_concatenate</name>
+  <version>2.0.0</version>
+  
+  <description>
+    Concatenate pointclouds into one virtual but unified sensor
+  </description>
+
+  <maintainer email="adrian.koering@ovgu.de">Adrian Köring</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>pcl_ros</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>sensor_msgs</depend>
+</package>
