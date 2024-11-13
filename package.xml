@@ -2,7 +2,7 @@
 <package format="2">
   <name>pointcloud_concatenate</name>
   <version>2.0.0</version>
-  
+
   <description>
     Concatenate pointclouds into one virtual but unified sensor
   </description>
@@ -17,4 +17,8 @@
   <depend>tf2</depend>
   <depend>tf2_ros</depend>
   <depend>sensor_msgs</depend>
+
+  <export>
+    <nodelet plugin="${prefix}/nodelet_plugins.xml" />
+  </export>
 </package>

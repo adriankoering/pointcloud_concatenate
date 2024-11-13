@@ -1,46 +1,36 @@
-<library path="lib/libconcatenate_two_clouds">
-  <class
+<library path="lib/libconcatenate_clouds">
+  <!-- <class
     name="lidar/ConcatenateTwoClouds"
     type="ConcatenateTwoClouds"
     base_class_type="nodelet::Nodelet">
     <description>
-        Time-Synchronize and Concatenate two pointclouds
+      Time-Synchronize and Concatenate two pointclouds
     </description>
-  </class>
-</library>
+  </class> -->
 
-
-<library path="lib/libconcatenate_four_clouds">
   <class
     name="lidar/ConcatenateFourClouds"
-    type="ConcatenatFourClouds"
+    type="ConcatenateFourClouds"
     base_class_type="nodelet::Nodelet">
     <description>
-        Time-Synchronize and Concatenate four pointclouds
+      Time-Synchronize and Concatenate four pointclouds
     </description>
   </class>
-</library>
 
-
-<library path="lib/libconcatenate_six_clouds">
-  <class
+  <!-- <class
     name="lidar/ConcatenateSixClouds"
     type="ConcatenateSixClouds"
     base_class_type="nodelet::Nodelet">
     <description>
-        Time-Synchronize and Concatenate six pointclouds
+      Time-Synchronize and Concatenate six pointclouds
     </description>
   </class>
-</library>
-
-
-<library path="lib/libconcatenate_eight_clouds">
   <class
     name="lidar/ConcatenateEightClouds"
     type="ConcatenateEightClouds"
     base_class_type="nodelet::Nodelet">
     <description>
-        Time-Synchronize and Concatenate eight pointclouds
+      Time-Synchronize and Concatenate eight pointclouds
     </description>
-  </class>
+  </class> -->
 </library>

@@ -12,6 +12,7 @@
 #include <nodelet/nodelet.h>
 #include <pluginlib/class_list_macros.h>
 
+// TODO: LazyNodelet: only subscribe/publish if output topic is read
 struct ConcatenateTwoClouds : public nodelet::Nodelet {
   ConcatenateTwoClouds() : listener_(buffer_) {}
   virtual ~ConcatenateTwoClouds() = default;

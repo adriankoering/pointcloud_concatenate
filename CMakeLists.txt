@@ -19,28 +19,20 @@ find_package(catkin REQUIRED COMPONENTS
 ### Define package
 catkin_package(
   INCLUDE_DIRS src
+  LIBRARIES concatenate_clouds
+  CATKIN_DEPENDS roscpp tf2 tf2_ros pcl_ros sensor_msgs
 )
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_library(concatenate_two_clouds src/ConcatenateTwoClouds.cpp)
-target_link_libraries(concatenate_two_clouds
-  ${catkin_LIBRARIES}
+add_library(concatenate_clouds
+  # src/ConcatenateTwoClouds.cpp
+  src/ConcatenateFourClouds.cpp
+  # src/ConcatenateSixClouds.cpp
+  # src/ConcatenateEightClouds.cpp  
 )
-
-add_library(concatenate_four_clouds src/ConcatenateFourClouds.cpp)
-target_link_libraries(concatenate_four_clouds
-  ${catkin_LIBRARIES}
-)
-
-add_library(concatenate_six_clouds src/ConcatenateSixClouds.cpp)
-target_link_libraries(concatenate_six_clouds
-  ${catkin_LIBRARIES}
-)
-
-add_library(concatenate_eight_clouds src/ConcatenateEightClouds.cpp)
-target_link_libraries(concatenate_eight_clouds
+target_link_libraries(concatenate_clouds
   ${catkin_LIBRARIES}
 )
