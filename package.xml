@@ -13,6 +13,8 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   <depend>roscpp</depend>
+  <depend>nodelet</depend>
+  
   <depend>pcl_ros</depend>
   <depend>tf2</depend>
   <depend>tf2_ros</depend>

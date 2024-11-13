@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 ### Find dependencies
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  nodelet
 
   tf2
   tf2_ros

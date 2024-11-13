@@ -1,34 +1,38 @@
 #include "ConcatenateFourClouds.h"
 
-#include <ros/ros.h>
 #include <pcl_ros/transforms.h>
+#include <ros/ros.h>
 
 void ConcatenateFourClouds::onInit() {
-    auto& nh = getNodeHandle();
-    auto& pnh = getPrivateNodeHandle();
+  auto &nh = getNodeHandle();
+  auto &pnh = getPrivateNodeHandle();
 
-    pnh.param("target_frame", target_frame_, target_frame_);
+  pnh.param("target_frame", target_frame_, target_frame_);
 
   // Initialize Publisher first s.t. its ready before first callback
   cloud_pub_ = nh.advertise<sensor_msgs::PointCloud2>("cloud_out", 10);
 
   // Setup Subscribers and callback
-  cloud1_sub_.subscribe(nh, "cloud_in1", 5);
-  cloud2_sub_.subscribe(nh, "cloud_in2", 5);
-  cloud3_sub_.subscribe(nh, "cloud_in3", 5);
-  cloud3_sub_.subscribe(nh, "cloud_in4", 5);
+  cloud1_sub_.subscribe(nh, "cloud_in1", 50);
+  cloud2_sub_.subscribe(nh, "cloud_in2", 50);
+  cloud3_sub_.subscribe(nh, "cloud_in3", 50);
+  cloud4_sub_.subscribe(nh, "cloud_in4", 50);
 
-  sync_ =
-      std::make_unique<Synchronizer>(SyncPolicy(5), cloud1_sub_, cloud2_sub_, cloud3_sub_, cloud4_sub_);
+  sync_ = std::make_unique<Synchronizer>(SyncPolicy(50), cloud1_sub_,
+                                         cloud2_sub_, cloud3_sub_, cloud4_sub_);
   sync_->registerCallback(
       boost::bind(&ConcatenateFourClouds::msgCallback, this, _1, _2, _3, _4));
+
+  ROS_INFO("[ConcatFourClouds] Startup :)");
 }
 
-void ConcatenateFourClouds::msgCallback(const sensor_msgs::PointCloud2ConstPtr &cloud1,
-                                        const sensor_msgs::PointCloud2ConstPtr &cloud2,
-                                        const sensor_msgs::PointCloud2ConstPtr &cloud3,
-                                        const sensor_msgs::PointCloud2ConstPtr &cloud4) {
- 
+void ConcatenateFourClouds::msgCallback(
+    const sensor_msgs::PointCloud2ConstPtr &cloud1,
+    const sensor_msgs::PointCloud2ConstPtr &cloud2,
+    const sensor_msgs::PointCloud2ConstPtr &cloud3,
+    const sensor_msgs::PointCloud2ConstPtr &cloud4) {
+  ROS_INFO("Concat 4 Clouds: msgCallback");
+
   sensor_msgs::PointCloud2 target_cloud1;
   pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
 
@@ -49,7 +53,6 @@ void ConcatenateFourClouds::msgCallback(const sensor_msgs::PointCloud2ConstPtr &
 
   sensor_msgs::PointCloud2 out;
   pcl::concatenatePointCloud(tmp1, tmp2, out);
-
 
   cloud_pub_.publish(out);
 }
