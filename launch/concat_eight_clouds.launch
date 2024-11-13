@@ -1,0 +1,28 @@
+<launch>
+  <arg name="cloud_in1" default="safety_front_left"/>
+  <arg name="cloud_in2" default="safety_front_right"/>
+  <arg name="cloud_in3" default="safety_rear_left"/>
+  <arg name="cloud_in4" default="safety_rear_right"/>
+  <arg name="cloud_in5" default="velodyne_front"/>
+  <arg name="cloud_in6" default="velodyne_rear"/>
+  <arg name="cloud_in7" default="long_range_front"/>
+  <arg name="cloud_in8" default="long_range_rear"/>
+  
+  <arg name="cloud_out" default="cloud_merged"/>
+  <arg name="target_frame" default="vehicle_1/base_link"/>
+
+  <node pkg="nodelet" type="nodelet" args="manager" name="concat_eight_clouds_nodelet_manager"/>
+
+  <node pkg="nodelet" type="nodelet" args="load lidar/ConcatenateEightClouds concat_eight_clouds_nodelet_manager" name="concat_eight_clouds" output="screen">
+    <remap from="cloud_in1" to="$(arg cloud_in1)"/>
+    <remap from="cloud_in2" to="$(arg cloud_in2)"/>
+    <remap from="cloud_in3" to="$(arg cloud_in3)"/>
+    <remap from="cloud_in4" to="$(arg cloud_in4)"/>
+    <remap from="cloud_in5" to="$(arg cloud_in5)"/>
+    <remap from="cloud_in6" to="$(arg cloud_in6)"/>
+    <remap from="cloud_in7" to="$(arg cloud_in7)"/>
+    <remap from="cloud_in8" to="$(arg cloud_in8)"/>
+    <remap from="cloud_out" to="$(arg cloud_out)"/>
+    <param name="target_frame" value="$(arg target_frame)"/>
+  </node>
+</launch>

@@ -25,10 +25,22 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-# Declare cpp executables
-add_executable(pointcloud_concatenate_node
-  src/pointcloud_concatenate_node.cpp
+add_library(concatenate_two_clouds src/ConcatenateTwoClouds.cpp)
+target_link_libraries(concatenate_two_clouds
+  ${catkin_LIBRARIES}
 )
-target_link_libraries(pointcloud_concatenate_node
+
+add_library(concatenate_four_clouds src/ConcatenateFourClouds.cpp)
+target_link_libraries(concatenate_four_clouds
+  ${catkin_LIBRARIES}
+)
+
+add_library(concatenate_six_clouds src/ConcatenateSixClouds.cpp)
+target_link_libraries(concatenate_six_clouds
+  ${catkin_LIBRARIES}
+)
+
+add_library(concatenate_eight_clouds src/ConcatenateEightClouds.cpp)
+target_link_libraries(concatenate_eight_clouds
   ${catkin_LIBRARIES}
 )

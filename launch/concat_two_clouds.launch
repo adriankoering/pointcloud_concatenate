@@ -1,0 +1,15 @@
+<launch>
+  <arg name="cloud_in1" default="velodyne_points_front"/>
+  <arg name="cloud_in2" default="velodyne_points_rear"/>
+  <arg name="cloud_out" default="cloud_merged"/>
+  <arg name="target_frame" default="vehicle_1/base_link"/>
+
+  <node pkg="nodelet" type="nodelet" args="manager" name="concat_two_clouds_nodelet_manager"/>
+
+  <node pkg="nodelet" type="nodelet" args="load lidar/ConcatenateTwoClouds concat_two_clouds_nodelet_manager" name="concat_two_clouds" output="screen">
+    <remap from="cloud_in1" to="$(arg cloud_in1)"/>
+    <remap from="cloud_in2" to="$(arg cloud_in2)"/>
+    <remap from="cloud_out" to="$(arg cloud_out)"/>
+    <param name="target_frame" value="$(arg target_frame)"/>
+  </node>
+</launch>
