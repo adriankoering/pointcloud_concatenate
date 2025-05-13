@@ -45,15 +45,11 @@ private:
   message_filters::Subscriber<sensor_msgs::PointCloud2> cloud8_sub_;
 
   // Synchronization
-  using SyncPolicy =
-      message_filters::sync_policies::ApproximateTime<sensor_msgs::PointCloud2,
-                                                      sensor_msgs::PointCloud2,
-                                                      sensor_msgs::PointCloud2,
-                                                      sensor_msgs::PointCloud2,
-                                                      sensor_msgs::PointCloud2,
-                                                      sensor_msgs::PointCloud2,
-                                                      sensor_msgs::PointCloud2,
-                                                      sensor_msgs::PointCloud2>;
+  using SyncPolicy = message_filters::sync_policies::ApproximateTime<
+      sensor_msgs::PointCloud2, sensor_msgs::PointCloud2,
+      sensor_msgs::PointCloud2, sensor_msgs::PointCloud2,
+      sensor_msgs::PointCloud2, sensor_msgs::PointCloud2,
+      sensor_msgs::PointCloud2, sensor_msgs::PointCloud2>;
   using Synchronizer = message_filters::Synchronizer<SyncPolicy>;
 
   std::unique_ptr<Synchronizer> sync_;
@@ -65,6 +61,5 @@ private:
   // Parameters
   std::string target_frame_;
 };
-
 
 PLUGINLIB_EXPORT_CLASS(ConcatenateEightClouds, nodelet::Nodelet)

@@ -46,5 +46,4 @@ private:
   std::string target_frame_;
 };
 
-
 PLUGINLIB_EXPORT_CLASS(ConcatenateTwoClouds, nodelet::Nodelet)

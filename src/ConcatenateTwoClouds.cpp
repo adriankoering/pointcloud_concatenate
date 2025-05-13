@@ -1,13 +1,13 @@
 #include "ConcatenateTwoClouds.h"
 
-#include <ros/ros.h>
 #include <pcl_ros/transforms.h>
+#include <ros/ros.h>
 
 void ConcatenateTwoClouds::onInit() {
-    auto& nh = getNodeHandle();
-    auto& pnh = getPrivateNodeHandle();
+  auto &nh = getNodeHandle();
+  auto &pnh = getPrivateNodeHandle();
 
-    pnh.param("target_frame", target_frame_, target_frame_);
+  pnh.param("target_frame", target_frame_, target_frame_);
 
   // Initialize Publisher first s.t. its ready before first callback
   cloud_pub_ = nh.advertise<sensor_msgs::PointCloud2>("cloud_out", 10);
@@ -22,9 +22,10 @@ void ConcatenateTwoClouds::onInit() {
       boost::bind(&ConcatenateTwoClouds::msgCallback, this, _1, _2));
 }
 
-void ConcatenateTwoClouds::msgCallback(const sensor_msgs::PointCloud2ConstPtr &cloud1,
-                                       const sensor_msgs::PointCloud2ConstPtr &cloud2) {
- 
+void ConcatenateTwoClouds::msgCallback(
+    const sensor_msgs::PointCloud2ConstPtr &cloud1,
+    const sensor_msgs::PointCloud2ConstPtr &cloud2) {
+
   sensor_msgs::PointCloud2 target_cloud1;
   pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
 

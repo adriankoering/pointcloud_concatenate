@@ -31,7 +31,7 @@ void ConcatenateFourClouds::msgCallback(
     const sensor_msgs::PointCloud2ConstPtr &cloud2,
     const sensor_msgs::PointCloud2ConstPtr &cloud3,
     const sensor_msgs::PointCloud2ConstPtr &cloud4) {
-  ROS_INFO("Concat 4 Clouds: msgCallback");
+  ROS_INFO_STREAM_ONCE("Concat 4 Clouds: msgCallback");
 
   sensor_msgs::PointCloud2 target_cloud1;
   pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);

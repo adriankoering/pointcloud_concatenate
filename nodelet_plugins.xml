@@ -1,12 +1,12 @@
 <library path="lib/libconcatenate_clouds">
-  <!-- <class
+  <class
     name="lidar/ConcatenateTwoClouds"
     type="ConcatenateTwoClouds"
     base_class_type="nodelet::Nodelet">
     <description>
       Time-Synchronize and Concatenate two pointclouds
     </description>
-  </class> -->
+  </class>
 
   <class
     name="lidar/ConcatenateFourClouds"

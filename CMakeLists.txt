@@ -5,19 +5,19 @@ add_compile_options(-Wall -Wextra -O2)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-### Find dependencies
+# ## Find dependencies
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   nodelet
 
   tf2
   tf2_ros
-  
+
   pcl_ros
   sensor_msgs
 )
 
-### Define package
+# ## Define package
 catkin_package(
   INCLUDE_DIRS src
   LIBRARIES concatenate_clouds
@@ -29,10 +29,11 @@ include_directories(
 )
 
 add_library(concatenate_clouds
-  # src/ConcatenateTwoClouds.cpp
+  src/ConcatenateTwoClouds.cpp
   src/ConcatenateFourClouds.cpp
+
   # src/ConcatenateSixClouds.cpp
-  # src/ConcatenateEightClouds.cpp  
+  # src/ConcatenateEightClouds.cpp
 )
 target_link_libraries(concatenate_clouds
   ${catkin_LIBRARIES}

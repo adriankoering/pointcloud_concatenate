@@ -1,13 +1,13 @@
 #include "ConcatenateEightClouds.h"
 
-#include <ros/ros.h>
 #include <pcl_ros/transforms.h>
+#include <ros/ros.h>
 
 void ConcatenateEightClouds::onInit() {
-    auto& nh = getNodeHandle();
-    auto& pnh = getPrivateNodeHandle();
+  auto &nh = getNodeHandle();
+  auto &pnh = getPrivateNodeHandle();
 
-    pnh.param("target_frame", target_frame_, target_frame_);
+  pnh.param("target_frame", target_frame_, target_frame_);
 
   // Initialize Publisher first s.t. its ready before first callback
   cloud_pub_ = nh.advertise<sensor_msgs::PointCloud2>("cloud_out", 10);
@@ -22,21 +22,23 @@ void ConcatenateEightClouds::onInit() {
   cloud7_sub_.subscribe(nh, "cloud_in7", 5);
   cloud8_sub_.subscribe(nh, "cloud_in8", 5);
 
-  sync_ =
-      std::make_unique<Synchronizer>(SyncPolicy(5), cloud1_sub_, cloud2_sub_, cloud3_sub_, cloud4_sub_, cloud5_sub_, cloud6_sub_, cloud7_sub_, cloud8_sub_);
-  sync_->registerCallback(
-      boost::bind(&ConcatenateEightClouds::msgCallback, this, _1, _2, _3, _4, _5, _6, _7, _8));
+  sync_ = std::make_unique<Synchronizer>(
+      SyncPolicy(5), cloud1_sub_, cloud2_sub_, cloud3_sub_, cloud4_sub_,
+      cloud5_sub_, cloud6_sub_, cloud7_sub_, cloud8_sub_);
+  sync_->registerCallback(boost::bind(&ConcatenateEightClouds::msgCallback,
+                                      this, _1, _2, _3, _4, _5, _6, _7, _8));
 }
 
-void ConcatenateEightClouds::msgCallback(const sensor_msgs::PointCloud2ConstPtr &cloud1,
-                                         const sensor_msgs::PointCloud2ConstPtr &cloud2,
-                                         const sensor_msgs::PointCloud2ConstPtr &cloud3,
-                                         const sensor_msgs::PointCloud2ConstPtr &cloud4,
-                                         const sensor_msgs::PointCloud2ConstPtr &cloud5,
-                                         const sensor_msgs::PointCloud2ConstPtr &cloud6,
-                                         const sensor_msgs::PointCloud2ConstPtr &cloud7,
-                                         const sensor_msgs::PointCloud2ConstPtr &cloud8) {
- 
+void ConcatenateEightClouds::msgCallback(
+    const sensor_msgs::PointCloud2ConstPtr &cloud1,
+    const sensor_msgs::PointCloud2ConstPtr &cloud2,
+    const sensor_msgs::PointCloud2ConstPtr &cloud3,
+    const sensor_msgs::PointCloud2ConstPtr &cloud4,
+    const sensor_msgs::PointCloud2ConstPtr &cloud5,
+    const sensor_msgs::PointCloud2ConstPtr &cloud6,
+    const sensor_msgs::PointCloud2ConstPtr &cloud7,
+    const sensor_msgs::PointCloud2ConstPtr &cloud8) {
+
   sensor_msgs::PointCloud2 target_cloud1;
   pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
 
@@ -69,7 +71,7 @@ void ConcatenateEightClouds::msgCallback(const sensor_msgs::PointCloud2ConstPtr 
 
   sensor_msgs::PointCloud2 tmp3;
   pcl::concatenatePointCloud(tmp1, tmp2, tmp3);
-  
+
   sensor_msgs::PointCloud2 tmp4;
   pcl::concatenatePointCloud(target_cloud5, target_cloud6, tmp4);
 

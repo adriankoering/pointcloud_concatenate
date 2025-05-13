@@ -2,6 +2,11 @@
 
 ### **Dependencies**
 
+TODO: create a single class that concatenates an arbitrary number of clouds?
+TODO: or at least create a single arbitrary fusion (of sensor_msgs/PointCloud2)
+TODO: thats instantiated in up to 8 nodes :)
+TODO: whats about ego-motion compensation?
+
 This package depends on the following libraries
 
 * `pcl`
