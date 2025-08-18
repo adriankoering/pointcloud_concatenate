@@ -39,8 +39,19 @@ void ConcatenateEightClouds::msgCallback(
     const sensor_msgs::PointCloud2ConstPtr &cloud7,
     const sensor_msgs::PointCloud2ConstPtr &cloud8) {
 
+  std::vector<sensor_msgs::PointCloud2ConstPtr> clouds = {
+      cloud1, cloud2, cloud3, cloud4, cloud5, cloud6, cloud7, cloud8};
+
+  std::vector<sensor_msgs::PointCloud2> target_clouds;
+  std::transform(clouds.begin(), clouds.end(), target_clouds.begin(),
+                 [&](const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
+                   sensor_msgs::PointCloud2 target_cloud;
+
+                   pcl_ros::transformPointCloud(target_frame_, *cloud_msg,
+                                                target_cloud, buffer_);
+                 });
+
   sensor_msgs::PointCloud2 target_cloud1;
-  pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
 
   sensor_msgs::PointCloud2 target_cloud2;
   pcl_ros::transformPointCloud(target_frame_, *cloud2, target_cloud2, buffer_);
