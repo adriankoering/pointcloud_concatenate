@@ -26,13 +26,20 @@ void ConcatenateTwoClouds::msgCallback(
     const sensor_msgs::PointCloud2ConstPtr &cloud1,
     const sensor_msgs::PointCloud2ConstPtr &cloud2) {
 
-  sensor_msgs::PointCloud2 target_cloud1;
-  pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
+  try {
 
-  sensor_msgs::PointCloud2 target_cloud2;
-  pcl_ros::transformPointCloud(target_frame_, *cloud2, target_cloud2, buffer_);
+    sensor_msgs::PointCloud2 target_cloud1;
+    pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1,
+                                 buffer_);
 
-  sensor_msgs::PointCloud2 out;
-  pcl::concatenatePointCloud(target_cloud1, target_cloud2, out);
-  cloud_pub_.publish(out);
+    sensor_msgs::PointCloud2 target_cloud2;
+    pcl_ros::transformPointCloud(target_frame_, *cloud2, target_cloud2,
+                                 buffer_);
+
+    sensor_msgs::PointCloud2 out;
+    pcl::concatenatePointCloud(target_cloud1, target_cloud2, out);
+    cloud_pub_.publish(out);
+  } catch (const std::exception &e) {
+    ROS_WARN_STREAM("[Cloud|Concat] Failed with " << e.what());
+  }
 }
