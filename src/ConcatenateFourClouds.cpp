@@ -1,4 +1,5 @@
 #include "ConcatenateFourClouds.h"
+#include "common_fields.h"
 
 #include <pcl_ros/transforms.h>
 #include <ros/ros.h>
@@ -33,6 +34,14 @@ void ConcatenateFourClouds::msgCallback(
     const sensor_msgs::PointCloud2ConstPtr &cloud4) {
   ROS_INFO_STREAM_ONCE("Concat 4 Clouds: msgCallback");
 
+  // find common set of fields between clouds:
+  std::vector<std::string> common_fields = getCommonFields(
+      cloud1->fields, cloud2->fields, cloud3->fields, cloud4->fields);
+
+  // for (const auto &field : common_fields) {
+  //   ROS_INFO_STREAM("[Cloud|Cat]: " << field);
+  // }
+
   sensor_msgs::PointCloud2 target_cloud1;
   pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
 
@@ -45,6 +54,7 @@ void ConcatenateFourClouds::msgCallback(
   sensor_msgs::PointCloud2 target_cloud4;
   pcl_ros::transformPointCloud(target_frame_, *cloud4, target_cloud4, buffer_);
 
+  // TODO: generic concatenation of multiple clouds with common fields only
   sensor_msgs::PointCloud2 tmp1;
   pcl::concatenatePointCloud(target_cloud1, target_cloud2, tmp1);
 

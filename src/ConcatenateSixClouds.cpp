@@ -1,4 +1,5 @@
 #include "ConcatenateSixClouds.h"
+#include "common_fields.h"
 
 #include <pcl_ros/transforms.h>
 #include <ros/ros.h>
@@ -34,6 +35,11 @@ void ConcatenateSixClouds::msgCallback(
     const sensor_msgs::PointCloud2ConstPtr &cloud4,
     const sensor_msgs::PointCloud2ConstPtr &cloud5,
     const sensor_msgs::PointCloud2ConstPtr &cloud6) {
+
+  // find common set of fields between clouds:
+  std::vector<std::string> common_fields =
+      getCommonFields(cloud1->fields, cloud2->fields, cloud3->fields,
+                      cloud4->fields, cloud5->fields, cloud6->fields);
 
   sensor_msgs::PointCloud2 target_cloud1;
   pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
