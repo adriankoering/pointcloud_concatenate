@@ -1,15 +1,16 @@
 <launch>
-  <arg name="cloud_in5" default="front/velodyne" />
-  <arg name="cloud_in7" default="front/longrange" />
-  <arg name="cloud_in1" default="front/left/safety" />
-  <arg name="cloud_in2" default="front/right/safety" />
-  <arg name="cloud_in6" default="rear/velodyne" />
-  <arg name="cloud_in8" default="rear/longrange" />
-  <arg name="cloud_in3" default="rear/left/safety" />
-  <arg name="cloud_in4" default="rear/right/safety" />
+  <arg name="name" default="concat_eight" />
+  <arg name="cloud_in1" default="front/velodyne" />
+  <arg name="cloud_in2" default="rear/velodyne" />
+  <arg name="cloud_in3" default="front/longrange" />
+  <arg name="cloud_in4" default="rear/longrange" />
+  <arg name="cloud_in5" default="front/left/safety" />
+  <arg name="cloud_in6" default="front/right/safety" />
+  <arg name="cloud_in7" default="rear/left/safety" />
+  <arg name="cloud_in8" default="rear/right/safety" />
   <arg name="cloud_out" default="cloud_merged" />
-
   <arg name="target_frame" default="vehicle_1/base_link" />
+  <arg name="nodelet_manager" default="nodelet_manager" />
 
   <node pkg="nodelet" type="nodelet" args="load lidar/ConcatenateEightClouds $(arg nodelet_manager)"
     name="$(arg name)" output="screen">

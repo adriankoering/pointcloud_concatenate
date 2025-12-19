@@ -1,9 +1,9 @@
 <launch>
   <arg name="name" default="concat_four" />
-  <arg name="cloud_in1" default="front/left/safety" />
-  <arg name="cloud_in2" default="front/right/safety" />
-  <arg name="cloud_in3" default="rear/left/safety" />
-  <arg name="cloud_in4" default="rear/right/safety" />
+  <arg name="cloud_in1" default="front/left/safety/cloud" />
+  <arg name="cloud_in2" default="front/right/safety/cloud" />
+  <arg name="cloud_in3" default="rear/left/safety/cloud" />
+  <arg name="cloud_in4" default="rear/right/safety/cloud" />
   <arg name="cloud_out" default="cloud_merged" />
   <arg name="target_frame" default="vehicle_1/base_link" />
   <arg name="nodelet_manager" default="nodelet_manager" />

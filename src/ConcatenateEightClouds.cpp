@@ -40,10 +40,10 @@ void ConcatenateEightClouds::msgCallback(
     const sensor_msgs::PointCloud2ConstPtr &cloud7,
     const sensor_msgs::PointCloud2ConstPtr &cloud8) {
 
-  // find common set of fields between clouds:
-  std::vector<std::string> common_fields = getCommonFields(
-      {cloud1->fields, cloud2->fields, cloud3->fields, cloud4->fields,
-       cloud5->fields, cloud6->fields, cloud7->fields, cloud8->fields});
+  // // find common set of fields between clouds:
+  // std::vector<std::string> common_fields = getCommonFields(
+  //     {cloud1->fields, cloud2->fields, cloud3->fields, cloud4->fields,
+  //      cloud5->fields, cloud6->fields, cloud7->fields, cloud8->fields});
 
   // std::vector<sensor_msgs::PointCloud2ConstPtr> clouds = {
   //     cloud1, cloud2, cloud3, cloud4, cloud5, cloud6, cloud7, cloud8};
@@ -81,26 +81,30 @@ void ConcatenateEightClouds::msgCallback(
   sensor_msgs::PointCloud2 target_cloud8;
   pcl_ros::transformPointCloud(target_frame_, *cloud8, target_cloud8, buffer_);
 
-  sensor_msgs::PointCloud2 tmp1;
-  pcl::concatenatePointCloud(target_cloud1, target_cloud2, tmp1);
+  // sensor_msgs::PointCloud2 tmp1;
+  // pcl::concatenatePointCloud(target_cloud1, target_cloud2, tmp1);
 
-  sensor_msgs::PointCloud2 tmp2;
-  pcl::concatenatePointCloud(target_cloud3, target_cloud4, tmp2);
+  // sensor_msgs::PointCloud2 tmp2;
+  // pcl::concatenatePointCloud(target_cloud3, target_cloud4, tmp2);
 
-  sensor_msgs::PointCloud2 tmp3;
-  pcl::concatenatePointCloud(tmp1, tmp2, tmp3);
+  // sensor_msgs::PointCloud2 tmp3;
+  // pcl::concatenatePointCloud(tmp1, tmp2, tmp3);
 
-  sensor_msgs::PointCloud2 tmp4;
-  pcl::concatenatePointCloud(target_cloud5, target_cloud6, tmp4);
+  // sensor_msgs::PointCloud2 tmp4;
+  // pcl::concatenatePointCloud(target_cloud5, target_cloud6, tmp4);
 
-  sensor_msgs::PointCloud2 tmp5;
-  pcl::concatenatePointCloud(target_cloud6, target_cloud7, tmp4);
+  // sensor_msgs::PointCloud2 tmp5;
+  // pcl::concatenatePointCloud(target_cloud6, target_cloud7, tmp4);
 
-  sensor_msgs::PointCloud2 tmp6;
-  pcl::concatenatePointCloud(tmp4, tmp5, tmp6);
+  // sensor_msgs::PointCloud2 tmp6;
+  // pcl::concatenatePointCloud(tmp4, tmp5, tmp6);
 
-  sensor_msgs::PointCloud2 out;
-  pcl::concatenatePointCloud(tmp5, tmp6, out);
+  // sensor_msgs::PointCloud2 out;
+  // pcl::concatenatePointCloud(tmp5, tmp6, out);
+
+  sensor_msgs::PointCloud2 out =
+      concatenate({target_cloud1, target_cloud2, target_cloud3, target_cloud4,
+                   target_cloud5, target_cloud6, target_cloud7, target_cloud8});
 
   cloud_pub_.publish(out);
 }

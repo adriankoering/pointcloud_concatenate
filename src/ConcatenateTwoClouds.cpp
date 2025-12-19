@@ -28,12 +28,9 @@ void ConcatenateTwoClouds::msgCallback(
     const sensor_msgs::PointCloud2ConstPtr &cloud2) {
 
   try {
-    // find common set of fields between clouds:
-    std::vector<std::string> common_fields =
-        getCommonFields({cloud1->fields, cloud2->fields});
-
     sensor_msgs::PointCloud2 target_cloud1;
-    // Does this do ego-motion compensation already?
+    // TODO: Does this do ego-motion compensation already?
+    // TODO: Should transform everything into a common point in time, too!
     pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1,
                                  buffer_);
 
@@ -41,9 +38,9 @@ void ConcatenateTwoClouds::msgCallback(
     pcl_ros::transformPointCloud(target_frame_, *cloud2, target_cloud2,
                                  buffer_);
 
-    sensor_msgs::PointCloud2 out;
-    pcl::concatenatePointCloud(target_cloud1, target_cloud2, out);
+    sensor_msgs::PointCloud2 out = concatenate({target_cloud1, target_cloud2});
     cloud_pub_.publish(out);
+
   } catch (const std::exception &e) {
     ROS_WARN_STREAM("[Cloud|Concat] Failed with " << e.what());
   }

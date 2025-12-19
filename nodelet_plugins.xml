@@ -17,7 +17,7 @@
     </description>
   </class>
 
-  <!-- <class
+  <class
     name="lidar/ConcatenateSixClouds"
     type="ConcatenateSixClouds"
     base_class_type="nodelet::Nodelet">
@@ -32,5 +32,5 @@
     <description>
       Time-Synchronize and Concatenate eight pointclouds
     </description>
-  </class> -->
+  </class>
 </library>
