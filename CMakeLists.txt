@@ -27,19 +27,17 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
-add_library(common_fields
-  src/common_fields.cpp
+add_library(common
+  src/common.cpp
 )
 
 add_library(concatenate_clouds
   src/ConcatenateTwoClouds.cpp
   src/ConcatenateFourClouds.cpp
-
-  # TODO:
-  # src/ConcatenateSixClouds.cpp
-  # src/ConcatenateEightClouds.cpp
+  src/ConcatenateSixClouds.cpp
+  src/ConcatenateEightClouds.cpp
 )
 target_link_libraries(concatenate_clouds
   ${catkin_LIBRARIES}
-  common_fields
+  common
 )

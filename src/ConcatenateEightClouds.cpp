@@ -1,5 +1,5 @@
 #include "ConcatenateEightClouds.h"
-#include "common_fields.h"
+#include "common.h"
 
 #include <pcl_ros/transforms.h>
 #include <ros/ros.h>
@@ -42,22 +42,23 @@ void ConcatenateEightClouds::msgCallback(
 
   // find common set of fields between clouds:
   std::vector<std::string> common_fields = getCommonFields(
-      cloud1->fields, cloud2->fields, cloud3->fields, cloud4->fields,
-      cloud5->fields, cloud6->fields, cloud7->fields, cloud8->fields);
+      {cloud1->fields, cloud2->fields, cloud3->fields, cloud4->fields,
+       cloud5->fields, cloud6->fields, cloud7->fields, cloud8->fields});
 
-  std::vector<sensor_msgs::PointCloud2ConstPtr> clouds = {
-      cloud1, cloud2, cloud3, cloud4, cloud5, cloud6, cloud7, cloud8};
+  // std::vector<sensor_msgs::PointCloud2ConstPtr> clouds = {
+  //     cloud1, cloud2, cloud3, cloud4, cloud5, cloud6, cloud7, cloud8};
 
-  std::vector<sensor_msgs::PointCloud2> target_clouds;
-  std::transform(clouds.begin(), clouds.end(), target_clouds.begin(),
-                 [&](const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
-                   sensor_msgs::PointCloud2 target_cloud;
+  // std::vector<sensor_msgs::PointCloud2> target_clouds;
+  // std::transform(clouds.begin(), clouds.end(), target_clouds.begin(),
+  //                [&](const sensor_msgs::PointCloud2ConstPtr &cloud_msg) {
+  //                  sensor_msgs::PointCloud2 target_cloud;
 
-                   pcl_ros::transformPointCloud(target_frame_, *cloud_msg,
-                                                target_cloud, buffer_);
-                 });
+  //                  pcl_ros::transformPointCloud(target_frame_, *cloud_msg,
+  //                                               target_cloud, buffer_);
+  //                });
 
   sensor_msgs::PointCloud2 target_cloud1;
+  pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
 
   sensor_msgs::PointCloud2 target_cloud2;
   pcl_ros::transformPointCloud(target_frame_, *cloud2, target_cloud2, buffer_);

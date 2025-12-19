@@ -1,5 +1,5 @@
 #include "ConcatenateTwoClouds.h"
-#include "common_fields.h"
+#include "common.h"
 
 #include <pcl_ros/transforms.h>
 #include <ros/ros.h>
@@ -30,7 +30,7 @@ void ConcatenateTwoClouds::msgCallback(
   try {
     // find common set of fields between clouds:
     std::vector<std::string> common_fields =
-        getCommonFields(cloud1->fields, cloud2->fields);
+        getCommonFields({cloud1->fields, cloud2->fields});
 
     sensor_msgs::PointCloud2 target_cloud1;
     // Does this do ego-motion compensation already?
