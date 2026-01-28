@@ -26,8 +26,9 @@ void ConcatenateTwoClouds::onInit() {
 void ConcatenateTwoClouds::msgCallback(
     const sensor_msgs::PointCloud2ConstPtr &cloud1,
     const sensor_msgs::PointCloud2ConstPtr &cloud2) {
+  ROS_INFO_STREAM_ONCE("Cloud|Concat] msgCallback");
+  try {  
 
-  try {
     sensor_msgs::PointCloud2 target_cloud1;
     // TODO: Does this do ego-motion compensation already?
     // TODO: Should transform everything into a common point in time, too!

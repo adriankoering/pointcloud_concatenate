@@ -32,35 +32,24 @@ void ConcatenateFourClouds::msgCallback(
     const sensor_msgs::PointCloud2ConstPtr &cloud2,
     const sensor_msgs::PointCloud2ConstPtr &cloud3,
     const sensor_msgs::PointCloud2ConstPtr &cloud4) {
-  ROS_INFO_STREAM_ONCE("Concat 4 Clouds: msgCallback");
+  ROS_INFO_STREAM_ONCE("Cloud|Concat] msgCallback");
+  try {
+    sensor_msgs::PointCloud2 target_cloud1;
+    pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
 
-  // // find common set of fields between clouds:
-  // std::vector<std::string> common_fields = getCommonFields(
-  //     {cloud1->fields, cloud2->fields, cloud3->fields, cloud4->fields});
+    sensor_msgs::PointCloud2 target_cloud2;
+    pcl_ros::transformPointCloud(target_frame_, *cloud2, target_cloud2, buffer_);
 
-  sensor_msgs::PointCloud2 target_cloud1;
-  pcl_ros::transformPointCloud(target_frame_, *cloud1, target_cloud1, buffer_);
+    sensor_msgs::PointCloud2 target_cloud3;
+    pcl_ros::transformPointCloud(target_frame_, *cloud3, target_cloud3, buffer_);
 
-  sensor_msgs::PointCloud2 target_cloud2;
-  pcl_ros::transformPointCloud(target_frame_, *cloud2, target_cloud2, buffer_);
+    sensor_msgs::PointCloud2 target_cloud4;
+    pcl_ros::transformPointCloud(target_frame_, *cloud4, target_cloud4, buffer_);
 
-  sensor_msgs::PointCloud2 target_cloud3;
-  pcl_ros::transformPointCloud(target_frame_, *cloud3, target_cloud3, buffer_);
-
-  sensor_msgs::PointCloud2 target_cloud4;
-  pcl_ros::transformPointCloud(target_frame_, *cloud4, target_cloud4, buffer_);
-
-  // // TODO: generic concatenation of multiple clouds with common fields only
-  // sensor_msgs::PointCloud2 tmp1;
-  // pcl::concatenatePointCloud(target_cloud1, target_cloud2, tmp1);
-
-  // sensor_msgs::PointCloud2 tmp2;
-  // pcl::concatenatePointCloud(target_cloud3, target_cloud4, tmp2);
-
-  // sensor_msgs::PointCloud2 out;
-  // pcl::concatenatePointCloud(tmp1, tmp2, out);
-
-  sensor_msgs::PointCloud2 out =
-      concatenate({target_cloud1, target_cloud2, target_cloud3, target_cloud4});
-  cloud_pub_.publish(out);
+    sensor_msgs::PointCloud2 out =
+        concatenate({target_cloud1, target_cloud2, target_cloud3, target_cloud4});
+    cloud_pub_.publish(out);
+    } catch (const std::exception &e) {
+    ROS_WARN_STREAM("[Cloud|Concat] Failed with " << e.what());
+  }
 }
